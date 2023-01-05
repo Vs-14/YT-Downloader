@@ -25,7 +25,7 @@ def next_btn(): #after choosing from audio/video
         main.destroy() #destroys main screen and creates new for video
         video = Tk()
         video.title("YT Downloader")
-        video.geometry("300x200")
+        video.geometry("300x150")
         video.resizable(0,0)
 
         Label(video,text="Video Downloader",font=('Arial 14'),foreground="blue").grid(row=0,column=1)
@@ -40,43 +40,23 @@ def next_btn(): #after choosing from audio/video
         link_bar.bind("<FocusIn>", click)
         link_bar.grid(row=1,column=0,columnspan=3,padx=35)
 
-        var = StringVar()
-        var.set("Highest")
-
-        quality = [("Highest","Highest"),("Lowest","Lowest")]
-
-        c = 3
-        for text,val in quality:
-            Radiobutton(video,text=text,value=val,variable=var).grid(row=c,column=1)
-            c += 1
-
-        l1 = Label(text="Choose the resolution").grid(row=2,column=1)
-
-        def vid_download(ch):
+        def vid_download():
             global link_bar
             link = link_bar.get()
             try:
                 yt = YouTube(link)
-                Label(video,text="Downloading please wait").grid(row=6,column=1)
-                if ch == "Highest":
-                    vid = yt.streams.get_highest_resolution() #720p
-                    vid.download("D:\Downloaded vids")
-                    res = messagebox.showinfo("Downloaded","Video downloaded successfully") #closes after download
-                    if(res=="ok"):
-                        video.destroy()
-                else:
-                    vid = yt.streams.get_lowest_resolution()
-                    vid.download("D:\Downloaded vids")
-                    res = messagebox.showinfo("Downloaded","Video downloaded successfully")
-                    if(res=="ok"):
-                        video.destroy()
+                vid = yt.streams.get_highest_resolution() #720p
+                vid.download()
+                res = messagebox.showinfo("Downloaded","Video downloaded successfully") #closes after download
+                if(res=="ok"):
+                    video.destroy()
             except:
                 res = messagebox.showerror("Invalid link","Invalid link please try again") #throws error when link does not work and ends
                 if(res=="ok"):
                     video.destroy()
 
-        download_btn = Button(video,text="Download",command=lambda: vid_download(var.get()))
-        download_btn.grid(row=5,column=1)
+        download_btn = Button(video,text="Download",command=vid_download)
+        download_btn.grid(row=2,column=1)
     else: #when audio is chosen
         main.destroy()
         audio = Tk()
@@ -101,7 +81,7 @@ def next_btn(): #after choosing from audio/video
                 yt = YouTube(link)
                 Label(audio,text="Downloading please wait").grid(row=3,column=1)
                 aud = yt.streams.filter(mime_type="audio/mp4").first() #gets the first stream with mp4 and audio
-                aud.download("D:\Downloaded vids")
+                aud.download()
                 res = messagebox.showinfo("Downloaded","Audio downloaded successfully") #closes after download
                 if(res=="ok"):
                     audio.destroy()
