@@ -11,7 +11,7 @@ After successful download pressing OK will close the application. <br/>
 If error occurs please try rechecking the url.
 
 ### To Download Video
-**Please note that video is downloaded in 720p.**<br/>
+**Please note that the video is downloaded in 720p.**<br/>
 Simply select the video button and press next.<br/>
 Paste the url of the desired video to be downloaded. <br/>
 After successful download pressing OK will close the application. <br/>
